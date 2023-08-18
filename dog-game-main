@@ -1,0 +1,109 @@
+import random
+
+
+class Dog( object ):
+    def __init__(self, name):
+        self.name = name
+        if name in f_dog_names:
+            self.gender = 'female'
+        if name in m_dog_names:
+            self.gender = 'male'
+        
+class Litter( object ):
+    def __init__(self, dogs):
+        self.dogs = dogs
+        
+f_dog_names = ['Betty', 'Josie', 'Princess', 'Mimi', 'Dolly', 'Leia', 'Julia']
+m_dog_names = ['Igor', 'Tails', 'Jacques', 'Jose', 'George W. Woof', 'Spock']
+dog_names = f_dog_names + m_dog_names
+
+
+def randomize_litter():
+    random_int = [i for i in range(len(dog_names))]
+    int_1 = random.choices(random_int)[0]
+    random_int.remove(int_1)
+    int_2 = random.choices(random_int)[0]
+    random_int.remove(int_2)
+    int_3 = random.choices(random_int)[0]
+    random_int.remove(int_3)
+    litter = Litter([Dog(dog_names[int_1]), Dog(dog_names[int_2]), Dog(dog_names[int_3])])    
+    return(litter)
+
+def random_events(dog):
+    if dog.gender == 'female':
+        possible_events = ['{} bites you.'.format(dog.name), '{} snuggles with you on your couch. {} \
+falls asleep.'.format(dog.name, dog.name), '{} looks depressed.'.format(dog.name), '{} loves the chew \
+toys you have bought for her.'.format(dog.name), '{} bolts out your\
+ front door, and you chase her for many minutes before\
+ capturing her.'.format(dog.name), '{} is terrified of your vacuum.'.format(dog.name),\
+'{} barks at a bear on television.'.format(dog.name),  '{} poops on your hardwood floors.'.format(dog.name),\
+'{} plays with the neighbor dog.'.format(dog.name), '{} is adorable.'.format(dog.name)]
+    if dog.gender == 'male':
+        possible_events = ['{} bites you.'.format(dog.name), '{} snuggles with you on your couch. {} \
+falls asleep.'.format(dog.name, dog.name), '{} looks depressed.'.format(dog.name), '{} loves the chew \
+toys you have bought for him.'.format(dog.name), '{} bolts out your\
+ front door, and you chase him for many minutes before\
+ capturing him.'.format(dog.name), '{} is terrified of your vacuum.'.format(dog.name),\
+'{} barks at a bear on television.'.format(dog.name), '{} poops on your hardwood floors.'.format(dog.name),\
+'{} plays with the neighbor dog.'.format(dog.name), '{} is adorable.'.format(dog.name)]
+    random_event = [i for i in range(len(possible_events))]
+    event_1 = random.choices(random_event)[0]
+    random_event.remove(event_1)
+    event_2 = random.choices(random_event)[0]
+    random_event.remove(event_2)
+    event_3 = random.choices(random_event)[0]
+    random_event.remove(event_3)   
+    event_4 = random.choices(random_event)[0]
+    random_event.remove(event_4)  
+
+    print(possible_events[event_1])                   
+    print(possible_events[event_2])                   
+    print(possible_events[event_3]) 
+    print(possible_events[event_4])
+        
+def game():
+    litter = randomize_litter()
+    print('Welcome to the Adoption Litter. See {}, {}, and {}. Maybe you\'ll meet a friend.'.\
+          format(litter.dogs[0].name, litter.dogs[1].name, litter.dogs[2].name,))
+    
+    which_dog = input('Which dog did you want to get to know for a week?')
+    pet_dog = Dog(which_dog)
+    
+    while which_dog not in dog_names:
+        print('Who is that?')
+        which_dog = input('Which dog did you want to get to know for a week?')    
+    
+    if pet_dog.gender == 'male':
+        print('Congrats on your new dog, {}! Make sure to let us know if you want to keep him.\n'.format(pet_dog.name))        
+    if pet_dog.gender == 'female':
+        print('Congrats on your new dog, {}! Make sure to let us know if you want to keep her.\n'.format(pet_dog.name))
+    
+    random_events(pet_dog)
+    cont = False
+    while cont == False:
+        cont = input('press enter to continue')
+
+    if pet_dog.gender == 'female':
+        keep = input('How did your week go? Do you want to keep {} or return her to our litter? (y to keep, n to return)'\
+                 .format(pet_dog.name))      
+    if pet_dog.gender == 'male':
+        keep = input('How did your week go? Do you want to keep {} or return him to our litter (y to keep, n to return)'
+                 .format(pet_dog.name))
+        
+    dog_updates = 0
+    if keep == 'n':
+        fresh_litter = input('That\'s alright! Come back any time. Press enter for a... fresh litter....')
+        if fresh_litter != 4:
+            game()
+    elif keep == 'y':
+        dog_updates = input('Congratulations on your new adorable dog friend! Press enter to see what they\'re up to now! Press q to quit.')
+        while dog_updates != 'q':
+            random_events(pet_dog)
+            dog_updates = input('press enter for more. Press q to quit.')
+    else:
+        print('')
+
+
+            
+        
+game()
